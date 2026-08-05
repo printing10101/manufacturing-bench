@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "manufacturing-bench"
+version = "0.1.0"
+description = "评估协议产品化：统一训练协议 + 显著性检验 + 负 R² 诊断 + 投稿检查清单（制造预测 ML）"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Lingjing Manufacturing Research" }]
+keywords = ["manufacturing", "machining", "chatter", "ML", "evaluation", "benchmark"]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.scripts]
+mbench = "mbench.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
