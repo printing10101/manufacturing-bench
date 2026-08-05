@@ -100,6 +100,13 @@ class SubmissionChecklist:
             return any("data_note" in (d or {}) for d in data.values())
         if item["id"] == "S6":
             return any("seed" in (d or {}) or "seeds" in (d or {}) for d in data.values())
+        if item["id"] == "S11":
+            flags = [f for d in data.values() if isinstance(d, dict)
+                     for f in (d.get("llm_review_flags") or [])]
+            return len(flags) == 0  # 无 AI 评审失真标记 → 通过；有失真标记 → 失败
+        if item["id"] == "S12":
+            return any(any(k in (d or {}) for k in ("references", "figures", "fig"))
+                       for d in data.values())
         # 默认：启发式检查（关键词出现在结果文本中）
         keywords = {
             "S3": ["p", "cohen", "d", "paired", "t-test", "t_test", "p_value"],
