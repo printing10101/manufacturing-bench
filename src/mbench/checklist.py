@@ -101,6 +101,8 @@ class SubmissionChecklist:
         if item["id"] == "S6":
             return any("seed" in (d or {}) or "seeds" in (d or {}) for d in data.values())
         if item["id"] == "S11":
+            if not data:
+                return False  # 无数据 = 未做失真检测
             flags = [f for d in data.values() if isinstance(d, dict)
                      for f in (d.get("llm_review_flags") or [])]
             return len(flags) == 0  # 无 AI 评审失真标记 → 通过；有失真标记 → 失败
